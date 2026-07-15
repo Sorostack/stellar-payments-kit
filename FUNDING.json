@@ -1,0 +1,23 @@
+{
+  "version": "v1",
+  "name": "Stellar Payments Kit",
+  "description": "A lightweight TypeScript toolkit for building payment flows on the Stellar network.",
+  "repository": "https://github.com/Sorostack/stellar-payments-kit",
+  "funding": {
+    "drips": {
+      "ethereum": {
+        "ownedBy": "https://github.com/Sorostack/stellar-payments-kit"
+      }
+    }
+  },
+  "dependencies": [
+    {
+      "name": "@stellar/stellar-sdk",
+      "repository": "https://github.com/stellar/js-stellar-sdk"
+    },
+    {
+      "name": "next",
+      "repository": "https://github.com/vercel/next.js"
+    }
+  ]
+}
