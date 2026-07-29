@@ -1,0 +1,24 @@
+name: Weekly Report
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: read
+      pull-requests: read
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              since,
+              state: 'all',
+            });
+            console.log(`Issues last week: ${issues.data.length}`);
