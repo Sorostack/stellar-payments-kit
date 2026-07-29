@@ -1,26 +1,26 @@
 # Architecture
 
-Stellar Payments Kit is organized as a monorepo with two main components:
+## Overview
 
-## TypeScript Library (`lib/stellar/`)
-Core payment utilities wrapping `@stellar/stellar-sdk`:
+stellar-payments-kit is a TypeScript library built on Stellar SDK.
 
-- `network.ts` — Horizon server factory, network config
-- `accounts.ts` — Keypair generation, Friendbot funding
-- `payments.ts` — XLM and custom asset payments
-- `transactions.ts` — Fee-bump, XDR decoder, explorer URL
-- `validation.ts` — Input validation helpers
-- `errors.ts` — Typed error classes
-- `tx-status.ts` — Transaction status polling
-- `batch.ts` — Multi-payment batching
-- `sep10.ts` — SEP-10 authentication flow
-- `soroban.ts` — Soroban contract invocation
+## Module Structure
 
-## Rust Soroban Contracts (`contracts/`)
+- `lib/stellar/` — Core modules organized by concern
+  - `accounts.ts` — Account creation and management
+  - `transactions.ts` — Payment operations
+  - `network.ts` — Network configuration
+  - `soroban-contract.ts` — Smart contract interactions
+  - `amm.ts` — Automated Market Maker operations
+  - `lending.ts` — Lending protocol integration
+  - `staking.ts` — Staking operations
+  - `nft.ts` — NFT management
+  - `anchor.ts` — Anchor/SEP integration
+  - And more...
 
-- `escrow` — Trustless escrow with depositor/beneficiary/arbiter
-- `token-swap` — Atomic token swap between two parties
-- `payment-splitter` — Distribute payments proportionally
+## Patterns
 
-## Next.js Demo App (`app/`)
-Interactive UI for exploring the library on Testnet.
+- Async functions with params objects
+- Network parameter defaults to testnet
+- Error handling via custom `StellarError` classes
+- barrel export via `lib/stellar/index.ts`

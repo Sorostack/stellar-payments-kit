@@ -1,16 +1,15 @@
 # FAQ
 
-## What is Stellar Payments Kit?
-A TypeScript toolkit for building payment flows on the Stellar network, with Soroban smart contract examples in Rust.
+## General
 
-## How do I get testnet XLM?
-Use the `fundTestnetAccount()` function or visit the Stellar Lab Friendbot.
+**Q: What Stellar network does this support?**
+Testnet, public, and custom networks.
 
-## Can I use this in production?
-Yes. Switch to `network: "mainnet"` for production use. Always test on testnet first.
+**Q: Does this support Soroban smart contracts?**
+Yes, via the `soroban-contract` module.
 
-## Do I need Rust installed?
-Only if you want to build the Soroban contracts. The TypeScript library works standalone.
+**Q: Can I use this in the browser?**
+The library is designed for Node.js but can be bundled for browser use.
 
-## How do I contribute?
-See CONTRIBUTING.md for setup instructions and contribution guidelines.
+**Q: How do I report a bug?**
+Open an issue on GitHub with the bug report template.

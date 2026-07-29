@@ -1,27 +1,17 @@
-# Deployment Guide
+# Deployment
 
-## TypeScript Library
+## Production
 
-The library is consumed directly from source via path aliases. No build step required.
+1. Build: `npm run build`
+2. Publish: `npm publish`
 
-## Next.js App
-
-```bash
-npm run build
-npm start
-```
-
-Deploy to Vercel, Netlify, or any Node.js host.
-
-## Soroban Contracts
+## Docker
 
 ```bash
-cargo build --release --target wasm32-unknown-unknown
+docker build -t stellar-payments-kit .
+docker run stellar-payments-kit
 ```
 
-The `.wasm` files will be in `target/wasm32-unknown-unknown/release/`.
+## CI/CD
 
-Deploy contracts using the Stellar CLI or Soroban CLI:
-```bash
-soroban contract deploy --wasm target/wasm32-unknown-unknown/release/escrow_contract.wasm
-```
+Pre-configured GitHub Actions workflows handle linting, testing, and publishing.
