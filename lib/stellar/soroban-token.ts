@@ -37,5 +37,6 @@ export function parseTokenAmount(
   const parts = formatted.split(".");
   const intPart = parts[0] ?? "0";
   const decPart = (parts[1] ?? "").padEnd(decimals, "0").slice(0, decimals);
-  return intPart + decPart;
+  const combined = intPart + decPart;
+  return combined.replace(/^0+/, "") || "0";
 }

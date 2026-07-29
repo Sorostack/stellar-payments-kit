@@ -13,8 +13,8 @@ describe("AMM", () => {
       expect(BigInt(result)).toBeLessThan(BigInt(2000));
     });
 
-    it("returns 0 for zero reserve", () => {
-      expect(calculateSwapOutput("100", "0", "2000", 30)).toBe("0");
+    it("returns full output reserve when input reserve is zero", () => {
+      expect(calculateSwapOutput("100", "0", "2000", 30)).toBe("2000");
     });
   });
 

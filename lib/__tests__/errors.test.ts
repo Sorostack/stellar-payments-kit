@@ -1,34 +1,43 @@
 import { describe, it, expect } from "vitest";
-import {
-  StellarPaymentError,
-  isNotFoundError,
-  isInsufficientBalanceError,
-} from "@/lib/stellar/errors";
+import { StellarError, NotFoundError, ValidationError, NetworkError, RateLimitError } from "@/lib/stellar/errors";
 
-describe("StellarPaymentError", () => {
+describe("StellarError", () => {
   it("creates an error with code and message", () => {
-    const error = new StellarPaymentError("Account not found", "ACCOUNT_NOT_FOUND");
+    const error = new StellarError("Account not found", "NOT_FOUND", 404);
     expect(error.message).toBe("Account not found");
-    expect(error.code).toBe("ACCOUNT_NOT_FOUND");
-    expect(error.name).toBe("StellarPaymentError");
+    expect(error.code).toBe("NOT_FOUND");
+    expect(error.name).toBe("StellarError");
   });
 });
 
-describe("isNotFoundError", () => {
-  it("returns true for ACCOUNT_NOT_FOUND error", () => {
-    const error = new StellarPaymentError("Not found", "ACCOUNT_NOT_FOUND");
-    expect(isNotFoundError(error)).toBe(true);
-  });
-
-  it("returns false for other errors", () => {
-    const error = new StellarPaymentError("Bad", "BAD_REQUEST");
-    expect(isNotFoundError(error)).toBe(false);
+describe("NotFoundError", () => {
+  it("formats message with resource name", () => {
+    const error = new NotFoundError("Account");
+    expect(error.message).toBe("Account not found");
+    expect(error.code).toBe("NOT_FOUND");
   });
 });
 
-describe("isInsufficientBalanceError", () => {
-  it("returns true for INSUFFICIENT_BALANCE error", () => {
-    const error = new StellarPaymentError("Low balance", "INSUFFICIENT_BALANCE");
-    expect(isInsufficientBalanceError(error)).toBe(true);
+describe("ValidationError", () => {
+  it("has correct code and status", () => {
+    const error = new ValidationError("Invalid input");
+    expect(error.code).toBe("VALIDATION_ERROR");
+    expect(error.statusCode).toBe(400);
+  });
+});
+
+describe("NetworkError", () => {
+  it("has correct defaults", () => {
+    const error = new NetworkError("Connection failed");
+    expect(error.code).toBe("NETWORK_ERROR");
+    expect(error.statusCode).toBe(502);
+  });
+});
+
+describe("RateLimitError", () => {
+  it("has correct defaults", () => {
+    const error = new RateLimitError(5000);
+    expect(error.code).toBe("RATE_LIMITED");
+    expect(error.statusCode).toBe(429);
   });
 });

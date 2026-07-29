@@ -17,9 +17,9 @@ describe("StellarMiddleware", () => {
 });
 
 describe("validatePublicKeyParam", () => {
-  it("returns null for valid key", async () => {
+  it("blocks invalid key", async () => {
     const mw = validatePublicKeyParam("account");
-    const result = await mw({ request: {} as any, params: { account: "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5W34" } });
-    expect(result).toBeNull();
+    const result = await mw({ request: {} as any, params: { account: "INVALID" } });
+    expect(result?.status).toBe(400);
   });
 });

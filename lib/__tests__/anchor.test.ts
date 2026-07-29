@@ -1,14 +1,17 @@
 import { describe, it, expect } from "vitest";
 import { validateAnchorAsset, formatAssetCode, getAnchorUrl } from "@/lib/stellar/anchor";
+import { generateKeypair } from "@/lib/stellar/accounts";
 
 describe("Anchor", () => {
   describe("validateAnchorAsset", () => {
     it("validates correct asset", () => {
-      expect(validateAnchorAsset({ code: "USDC", issuer: "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5w34" })).toBe(true);
+      const { publicKey } = generateKeypair();
+      expect(validateAnchorAsset({ code: "USDC", issuer: publicKey })).toBe(true);
     });
 
     it("rejects empty code", () => {
-      expect(validateAnchorAsset({ code: "", issuer: "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5w34" })).toBe(false);
+      const { publicKey } = generateKeypair();
+      expect(validateAnchorAsset({ code: "", issuer: publicKey })).toBe(false);
     });
   });
 
