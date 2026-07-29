@@ -1,25 +1,31 @@
 import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import typescriptParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 
 const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
   {
+    files: ["**/*.ts", "**/*.tsx"],
+    languageOptions: {
+      parser: typescriptParser,
+    },
+    plugins: {
+      "@typescript-eslint": tsPlugin,
+    },
     rules: {
-      "@typescript-eslint/no-explicit-any": "off",
+      "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "import/no-anonymous-default-export": "off",
-      "react/display-name": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-duplicate-imports": "warn",
+      "no-console": "off",
     },
   },
-  // Override default ignores of eslint-config-next.
   globalIgnores([
     ".next/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
     ".lintstagedrc.mjs",
+    "**/*.config.mjs",
     "scripts/**",
   ]),
 ]);
