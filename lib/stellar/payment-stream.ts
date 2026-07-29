@@ -14,19 +14,19 @@ export class PaymentStream {
   private config: PaymentStreamConfig;
   private sentAmount = "0";
   private intervalId: ReturnType<typeof setInterval> | null = null;
-  private onProgress?: (sent: string, total: string) => void;
-  private onComplete?: () => void;
+  private _onProgress?: (sent: string, total: string) => void;
+  private _onComplete?: () => void;
 
   constructor(config: PaymentStreamConfig) {
     this.config = config;
   }
 
   onProgress(cb: (sent: string, total: string) => void): void {
-    this.onProgress = cb;
+    this._onProgress = cb;
   }
 
   onComplete(cb: () => void): void {
-    this.onComplete = cb;
+    this._onComplete = cb;
   }
 
   async start(): Promise<void> {
@@ -36,7 +36,7 @@ export class PaymentStream {
     this.intervalId = setInterval(async () => {
       if (Number(this.sentAmount) >= Number(this.config.totalAmount)) {
         this.stop();
-        this.onComplete?.();
+        this._onComplete?.();
         return;
       }
 
@@ -49,7 +49,7 @@ export class PaymentStream {
           network: this.config.network,
         });
         this.sentAmount = String(Number(this.sentAmount) + Number(perInterval));
-        this.onProgress?.(this.sentAmount, this.config.totalAmount);
+        this._onProgress?.(this.sentAmount, this.config.totalAmount);
       } catch {
         this.stop();
       }
