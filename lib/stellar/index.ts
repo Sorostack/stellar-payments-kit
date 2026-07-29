@@ -55,4 +55,7 @@ export * from "./middleware";
 export * from "./sanitize";
 export * from "./constants";
 export * from "./utils";
+export * from "./fees";
+export * from "./soroban-contract";
+export * from "./identity";
 export * from "./errors";
