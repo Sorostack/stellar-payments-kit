@@ -21,9 +21,13 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npx --yes typedoc --out docs/api 2>&1 || echo "typedoc generation skipped"
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - id: configure
+        uses: actions/configure-pages@v4
+        continue-on-error: true
+      - if: steps.configure.outcome == 'success'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: docs
       - id: deployment
+        if: steps.configure.outcome == 'success'
         uses: actions/deploy-pages@v4
