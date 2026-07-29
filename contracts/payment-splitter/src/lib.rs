@@ -1,6 +1,6 @@
 #![no_std]
 
-use soroban_sdk::{contract, contractimpl, contracttype, vec, Address, Env, Vec};
+use soroban_sdk::{contract, contractimpl, contracttype, symbol_short, vec, Address, Env, Vec};
 
 #[contracttype]
 #[derive(Clone)]
@@ -28,7 +28,7 @@ impl PaymentSplitterContract {
             shares,
             total_shares: total,
         };
-        env.storage().instance().set(&symbol_let!("config"), &config);
+        env.storage().instance().set(&symbol_short!("config"), &config);
     }
 
     pub fn receive_payment(env: Env, amount: i128) {
@@ -36,14 +36,14 @@ impl PaymentSplitterContract {
             total_amount: amount,
             distributed: false,
         };
-        env.storage().instance().set(&symbol_let!("payment"), &payment);
+        env.storage().instance().set(&symbol_short!("payment"), &payment);
     }
 
     pub fn distribute(env: Env, caller: Address) -> Vec<i128> {
         caller.require_auth();
 
-        let config: SplitConfig = env.storage().instance().get(&symbol_let!("config")).unwrap();
-        let payment: Payment = env.storage().instance().get(&symbol_let!("payment")).unwrap();
+        let config: SplitConfig = env.storage().instance().get(&symbol_short!("config")).unwrap();
+        let payment: Payment = env.storage().instance().get(&symbol_short!("payment")).unwrap();
         assert!(!payment.distributed, "already distributed");
 
         let mut amounts: Vec<i128> = vec![&env];
@@ -58,13 +58,13 @@ impl PaymentSplitterContract {
             total_amount: payment.total_amount,
             distributed: true,
         };
-        env.storage().instance().set(&symbol_let!("payment"), &updated);
+        env.storage().instance().set(&symbol_short!("payment"), &updated);
 
         amounts
     }
 
     pub fn get_config(env: Env) -> Option<SplitConfig> {
-        env.storage().instance().get(&symbol_let!("config"))
+        env.storage().instance().get(&symbol_short!("config"))
     }
 }
 
