@@ -8,6 +8,10 @@ A lightweight, developer-friendly toolkit for building payment flows on the [Ste
 [![Tests](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-tests.yml)
 [![Open Issues](https://img.shields.io/github/issues/Sorostack/stellar-payments-kit)](https://github.com/Sorostack/stellar-payments-kit/issues)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![npm version](https://img.shields.io/npm/v/stellar-payments-kit)](https://www.npmjs.com/package/stellar-payments-kit)
+[![codecov](https://codecov.io/gh/Sorostack/stellar-payments-kit/branch/main/graph/badge.svg)](https://codecov.io/gh/Sorostack/stellar-payments-kit)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/Sorostack/stellar-payments-kit)](https://codeclimate.com/github/Sorostack/stellar-payments-kit)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 ---
 
@@ -28,15 +32,23 @@ Working directly with `stellar-sdk` means writing a lot of boilerplate — loadi
 ## Features
 
 ### TypeScript Library
-- **Account funding** — fund Testnet accounts via Friendbot
-- **XLM transfers** — send native XLM with automatic fee estimation
-- **Custom asset payments** — transfer Stellar assets (USDC, etc.)
+- **Account funding & management** — fund Testnet accounts via Friendbot
+- **XLM & asset transfers** — send native XLM or custom assets with automatic fee estimation
 - **Batch payments** — send multiple payments in one transaction
 - **Fee-bump transactions** — sponsor transaction fees for users
 - **SEP-10 authentication** — anchor authentication flow
 - **Soroban contract invocation** — call smart contracts from TypeScript
 - **Transaction polling** — wait for transaction confirmation
 - **Input validation** — validate keys, amounts, and memos
+- **AMM / Liquidity Pools** — create pools and swap tokens
+- **Staking & Lending** — stake, unstake, claim rewards, lend, borrow
+- **NFT management** — mint, transfer, and burn NFTs
+- **Multisig** — configure multi-signature accounts
+- **Time locks & escrow** — conditional payment escrows
+- **Webhooks & notifications** — event-driven callbacks
+- **Rate limiting & caching** — performance optimizations
+- **Middleware pipeline** — composable request/response middleware
+- **Analytics & metrics** — usage tracking and monitoring
 
 ### Soroban Contracts (Rust)
 - **Escrow** — trustless escrow with depositor, beneficiary, and arbiter
@@ -142,22 +154,33 @@ stellar-payments-kit/
 │   ├── token-swap/
 │   └── payment-splitter/
 ├── lib/
-│   └── stellar/                  # Core TypeScript library
-│       ├── accounts.ts
-│       ├── batch.ts
-│       ├── errors.ts
-│       ├── index.ts
-│       ├── network.ts
-│       ├── payments.ts
-│       ├── sep10.ts
-│       ├── soroban.ts
-│       ├── transactions.ts
-│       ├── tx-status.ts
-│       └── validation.ts
+│   └── stellar/                  # Core TypeScript library (60+ modules)
+│       ├── accounts.ts           # Account creation & funding
+│       ├── amm.ts                # Automated Market Maker
+│       ├── analytics.ts          # Usage tracking
+│       ├── anchor.ts             # SEP integration
+│       ├── batch.ts              # Batch payments
+│       ├── cache.ts              # In-memory caching
+│       ├── claimable-balance.ts  # Claimable balances
+│       ├── errors.ts             # Custom error classes
+│       ├── governance.ts         # On-chain governance
+│       ├── lending.ts            # Lending protocol
+│       ├── middleware.ts         # Composable middleware
+│       ├── multisig.ts           # Multi-signature
+│       ├── nft.ts                # NFT operations
+│       ├── payments.ts           # XLM & asset payments
+│       ├── rate-limiter.ts       # Rate limiting
+│       ├── soroban.ts            # Soroban contract helpers
+│       ├── soroban-contract.ts   # Contract deployment
+│       ├── staking.ts            # Staking operations
+│       ├── streaming.ts          # Event streaming
+│       ├── webhooks.ts           # Webhook callbacks
+│       └── ... (40+ more modules)
 ├── docs/                         # Architecture and deployment docs
-├── scripts/                      # Example scripts
+├── examples/                     # Usage examples
+├── scripts/                      # Utility scripts
 ├── .github/
-│   └── workflows/                # CI/CD pipelines
+│   └── workflows/                # CI/CD pipelines (20+ workflows)
 ├── vitest.config.ts
 ├── Cargo.toml                    # Rust workspace
 ├── rust-toolchain.toml
@@ -169,12 +192,17 @@ stellar-payments-kit/
 ## CI/CD
 
 | Workflow | Status |
-|---|---|
+|---|---|---|
 | TypeScript CI (typecheck, lint, build) | [![TypeScript CI](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-typescript.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-typescript.yml) |
 | Rust CI (fmt, clippy, build, test) | [![Rust CI](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-rust.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-rust.yml) |
 | Tests (sharded, coverage) | [![Tests](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-tests.yml) |
 | Coverage | [![Coverage](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-coverage.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-coverage.yml) |
 | Security Audit | [![Security Audit](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/security-audit.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/security-audit.yml) |
+| Benchmark | [![Benchmark](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/benchmark.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/benchmark.yml) |
+| CodeQL | [![CodeQL](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/codeql.yml) |
+| Deploy Docs | [![Docs](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/deploy-docs.yml) |
+| Scorecard | [![Scorecard](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/scorecard.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/scorecard.yml) |
+| Sync Labels | [![Labels](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/sync-labels.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/sync-labels.yml) |
 
 ---
 
@@ -183,15 +211,28 @@ stellar-payments-kit/
 - [x] Soroban smart contract invocation helpers
 - [x] SEP-10 authentication flow
 - [x] Batch payment utilities
+- [x] AMM / Liquidity Pool operations
+- [x] Staking & lending protocols
+- [x] NFT management
+- [x] Multisig configuration
+- [x] Webhooks & event notifications
+- [x] Rate limiting & caching
+- [x] Middleware pipeline
+- [x] Analytics & metrics
 - [ ] SEP-24 deposit/withdrawal helpers
 - [ ] React hooks package (`stellar-payments-kit/react`)
 - [ ] Stellar ecosystem wallet integration
+- [ ] Hardware wallet support
 
 ---
 
 ## Contributing
 
 Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Documentation
+
+Full documentation is available in the [docs/](docs/) directory including architecture overview, API reference, deployment guides, and more. See [docs/index.md](docs/index.md) for the full index.
 
 ---
 
