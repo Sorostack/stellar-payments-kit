@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v7
       - uses: codespell-project/actions-codespell@v2
         with:
-          skip: node_modules,*.wasm,target
+          skip: node_modules,*.wasm,target,package-lock.json
