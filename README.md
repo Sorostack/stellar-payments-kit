@@ -1,8 +1,11 @@
 # Stellar Payments Kit
 
-A lightweight, developer-friendly toolkit for building payment flows on the [Stellar](https://stellar.org) network. It wraps the [`@stellar/stellar-sdk`](https://github.com/stellar/js-stellar-sdk) to provide simple, composable utilities for common payment operations — account creation, asset transfers, transaction building, and fee-bump transactions — all with a clean TypeScript API.
+A lightweight, developer-friendly toolkit for building payment flows on the [Stellar](https://stellar.org) network. Includes a TypeScript library, Soroban smart contracts, and an interactive demo app.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![TypeScript CI](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-typescript.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-typescript.yml)
+[![Rust CI](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-rust.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-rust.yml)
+[![Tests](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-tests.yml)
 [![Open Issues](https://img.shields.io/github/issues/Sorostack/stellar-payments-kit)](https://github.com/Sorostack/stellar-payments-kit/issues)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -15,21 +18,33 @@ Working directly with `stellar-sdk` means writing a lot of boilerplate — loadi
 **Key goals:**
 - Minimal API surface — do the most common things in one line
 - TypeScript-first with full type inference
-- Supports both Testnet (Futurenet) and Mainnet
+- Supports both Testnet and Mainnet
 - Built on top of the official `@stellar/stellar-sdk` — no hidden magic
 - Interactive demo UI included
+- Soroban smart contract examples in Rust
 
 ---
 
 ## Features
 
-- **Account funding** — fund Testnet accounts via Friendbot with a single call
-- **XLM transfers** — send native XLM between accounts with automatic fee estimation
-- **Custom asset payments** — issue and transfer custom Stellar assets
-- **Transaction building** — fluent helpers for constructing and signing transactions
-- **Fee-bump transactions** — wrap existing transactions to pay fees on behalf of users
-- **Network switching** — toggle between Testnet and Mainnet at runtime
-- **Interactive UI** — explore all features via the built-in Next.js demo app
+### TypeScript Library
+- **Account funding** — fund Testnet accounts via Friendbot
+- **XLM transfers** — send native XLM with automatic fee estimation
+- **Custom asset payments** — transfer Stellar assets (USDC, etc.)
+- **Batch payments** — send multiple payments in one transaction
+- **Fee-bump transactions** — sponsor transaction fees for users
+- **SEP-10 authentication** — anchor authentication flow
+- **Soroban contract invocation** — call smart contracts from TypeScript
+- **Transaction polling** — wait for transaction confirmation
+- **Input validation** — validate keys, amounts, and memos
+
+### Soroban Contracts (Rust)
+- **Escrow** — trustless escrow with depositor, beneficiary, and arbiter
+- **Token Swap** — atomic swap between two parties
+- **Payment Splitter** — distribute payments proportionally to multiple payees
+
+### Interactive Demo App
+Built with Next.js — explore all features via a clean tabbed interface.
 
 ---
 
@@ -38,7 +53,8 @@ Working directly with `stellar-sdk` means writing a lot of boilerplate — loadi
 ### Prerequisites
 
 - Node.js 18+
-- npm or yarn
+- Rust 1.78+ (for Soroban contracts)
+- `wasm32-unknown-unknown` target: `rustup target add wasm32-unknown-unknown`
 
 ### Installation
 
@@ -56,11 +72,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to explore the interactive demo.
 
-### Build for production
+### Build Soroban contracts
 
 ```bash
-npm run build
-npm start
+cargo build --release --target wasm32-unknown-unknown
 ```
 
 ---
@@ -72,9 +87,7 @@ npm start
 ```typescript
 import { fundTestnetAccount } from "@/lib/stellar/accounts";
 
-const keypair = await fundTestnetAccount();
-console.log("Public Key:", keypair.publicKey());
-console.log("Secret Key:", keypair.secret());
+const { publicKey, secretKey } = await fundTestnetAccount();
 ```
 
 ### Send XLM
@@ -82,7 +95,7 @@ console.log("Secret Key:", keypair.secret());
 ```typescript
 import { sendPayment } from "@/lib/stellar/payments";
 
-await sendPayment({
+const result = await sendPayment({
   sourceSecret: "S...",
   destinationPublicKey: "G...",
   amount: "10",
@@ -90,30 +103,30 @@ await sendPayment({
 });
 ```
 
-### Send a custom asset
+### Batch payments
 
 ```typescript
-import { sendAssetPayment } from "@/lib/stellar/payments";
+import { sendBatchPayment } from "@/lib/stellar/batch";
 
-await sendAssetPayment({
+const result = await sendBatchPayment({
   sourceSecret: "S...",
-  destinationPublicKey: "G...",
-  assetCode: "USDC",
-  assetIssuer: "G...",
-  amount: "5.00",
-  network: "testnet",
+  payments: [
+    { destinationPublicKey: "G...", amount: "10" },
+    { destinationPublicKey: "G...", amount: "20" },
+  ],
 });
 ```
 
-### Build a fee-bump transaction
+### Invoke a Soroban contract
 
 ```typescript
-import { buildFeeBumpTransaction } from "@/lib/stellar/transactions";
+import { invokeSorobanContract } from "@/lib/stellar/soroban";
 
-const feeBumpTx = await buildFeeBumpTransaction({
-  feeSourceSecret: "S...",
-  innerTransactionXdr: "...",
-  network: "testnet",
+const hash = await invokeSorobanContract({
+  sourceSecret: "S...",
+  contractId: "CA...",
+  functionName: "hello",
+  args: [],
 });
 ```
 
@@ -123,38 +136,62 @@ const feeBumpTx = await buildFeeBumpTransaction({
 
 ```
 stellar-payments-kit/
-├── app/                    # Next.js app (demo UI)
-│   ├── layout.tsx
-│   ├── page.tsx            # Interactive demo home
-│   └── globals.css
+├── app/                          # Next.js demo UI
+├── contracts/                    # Soroban smart contracts (Rust)
+│   ├── escrow/
+│   ├── token-swap/
+│   └── payment-splitter/
 ├── lib/
-│   └── stellar/
-│       ├── accounts.ts     # Account creation & funding helpers
-│       ├── payments.ts     # XLM & asset payment helpers
-│       ├── transactions.ts # Transaction building & fee-bump
-│       └── network.ts      # Network configuration (testnet/mainnet)
-├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
-├── CHANGELOG.md
-├── FUNDING.json
-└── LICENSE
+│   └── stellar/                  # Core TypeScript library
+│       ├── accounts.ts
+│       ├── batch.ts
+│       ├── errors.ts
+│       ├── index.ts
+│       ├── network.ts
+│       ├── payments.ts
+│       ├── sep10.ts
+│       ├── soroban.ts
+│       ├── transactions.ts
+│       ├── tx-status.ts
+│       └── validation.ts
+├── docs/                         # Architecture and deployment docs
+├── scripts/                      # Example scripts
+├── .github/
+│   └── workflows/                # CI/CD pipelines
+├── vitest.config.ts
+├── Cargo.toml                    # Rust workspace
+├── rust-toolchain.toml
+└── Makefile
 ```
 
 ---
 
-## Contributing
+## CI/CD
 
-Contributions are welcome and appreciated! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to open issues, propose features, and submit pull requests.
+| Workflow | Status |
+|---|---|
+| TypeScript CI (typecheck, lint, build) | [![TypeScript CI](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-typescript.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-typescript.yml) |
+| Rust CI (fmt, clippy, build, test) | [![Rust CI](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-rust.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-rust.yml) |
+| Tests (sharded, coverage) | [![Tests](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-tests.yml) |
+| Coverage | [![Coverage](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-coverage.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/ci-coverage.yml) |
+| Security Audit | [![Security Audit](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/security-audit.yml/badge.svg)](https://github.com/Sorostack/stellar-payments-kit/actions/workflows/security-audit.yml) |
 
 ---
 
 ## Roadmap
 
-- [ ] Soroban smart contract invocation helpers
-- [ ] SEP-10 authentication flow
+- [x] Soroban smart contract invocation helpers
+- [x] SEP-10 authentication flow
+- [x] Batch payment utilities
 - [ ] SEP-24 deposit/withdrawal helpers
-- [ ] Batch payment utilities
 - [ ] React hooks package (`stellar-payments-kit/react`)
+- [ ] Stellar ecosystem wallet integration
+
+---
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
