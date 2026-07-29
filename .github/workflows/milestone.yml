@@ -1,0 +1,31 @@
+name: Milestone
+
+on:
+  milestone:
+    types: [closed]
+
+jobs:
+  milestone:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              milestone: context.payload.milestone.number,
+              state: 'open'
+            }).then(issues => {
+              issues.data.forEach(issue => {
+                github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: 'This issue was part of the closed milestone.'
+                });
+              });
+            });

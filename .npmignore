@@ -1,0 +1,9 @@
+node_modules
+dist
+.next
+coverage
+*.wasm
+target
+.env
+.env.local
+*.tsbuildinfo
