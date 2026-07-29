@@ -1,24 +1,38 @@
-export class StellarPaymentError extends Error {
+export class StellarError extends Error {
   constructor(
     message: string,
-    public readonly code: string,
-    public readonly cause?: unknown,
+    public code: string,
+    public statusCode: number = 500,
   ) {
     super(message);
-    this.name = "StellarPaymentError";
+    this.name = "StellarError";
   }
 }
 
-export function isNotFoundError(error: unknown): boolean {
-  if (error instanceof StellarPaymentError) {
-    return error.code === "ACCOUNT_NOT_FOUND";
+export class ValidationError extends StellarError {
+  constructor(message: string) {
+    super(message, "VALIDATION_ERROR", 400);
+    this.name = "ValidationError";
   }
-  return false;
 }
 
-export function isInsufficientBalanceError(error: unknown): boolean {
-  if (error instanceof StellarPaymentError) {
-    return error.code === "INSUFFICIENT_BALANCE";
+export class NetworkError extends StellarError {
+  constructor(message: string, statusCode: number = 502) {
+    super(message, "NETWORK_ERROR", statusCode);
+    this.name = "NetworkError";
   }
-  return false;
+}
+
+export class NotFoundError extends StellarError {
+  constructor(resource: string) {
+    super(`${resource} not found`, "NOT_FOUND", 404);
+    this.name = "NotFoundError";
+  }
+}
+
+export class RateLimitError extends StellarError {
+  constructor(retryAfterMs: number) {
+    super("Rate limit exceeded", "RATE_LIMITED", 429);
+    this.name = "RateLimitError";
+  }
 }
