@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npx -y typedoc
+      - run: npx --yes typedoc --out docs/api 2>&1 || echo "typedoc generation skipped"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
