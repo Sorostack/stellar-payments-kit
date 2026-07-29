@@ -2,18 +2,19 @@
 
 ## Reporting a Vulnerability
 
-We take the security of Stellar Payments Kit seriously. If you discover a security vulnerability, please follow these steps:
+Contact the maintainers directly at security@stellar-payments-kit.dev. Do not file public issues.
 
-1. **Do not** open a public issue
-2. Send a description of the vulnerability to the repository maintainer via a private channel
-3. Include steps to reproduce and potential impact
+## Supported Versions
 
-We will acknowledge receipt within 48 hours and provide a timeline for the fix.
+| Version | Supported |
+|---------|-----------|
+| 1.x     | Yes       |
+| < 1.0   | No        |
 
-## Best Practices
+## Security Best Practices
 
-- Never commit secret keys or sensitive data to the repository
-- Use environment variables for configuration
-- Always use Testnet for development and testing
-- Validate all user inputs before submitting transactions
-- Keep dependencies up to date
+- Never commit secret keys
+- Use environment variables for sensitive data
+- Validate all user inputs
+- Keep dependencies updated
+- Use `npm audit` regularly
