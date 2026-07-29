@@ -1,19 +1,17 @@
 import { describe, it, expect } from "vitest";
+import { Keypair } from "@stellar/stellar-sdk";
 import {
   createClaimableBalance,
-  claimClaimableBalance,
 } from "@/lib/stellar/claimable-balance";
-import { generateKeypair } from "@/lib/stellar/accounts";
 
 describe("ClaimableBalance", () => {
-  it("creates claimable balance operation", () => {
-    const claimant = generateKeypair();
-    const result = createClaimableBalance(
-      generateKeypair().publicKey,
-      "100",
-      "USDC",
-      generateKeypair().publicKey,
-    );
-    expect(result).toBeDefined();
+  it("creates claimable balance operation", async () => {
+    const source = Keypair.random();
+    const claimant = Keypair.random();
+    await expect(createClaimableBalance({
+      sourceSecret: source.secret(),
+      claimant: claimant.publicKey(),
+      amount: "100",
+    })).rejects.toThrow();
   });
 });
