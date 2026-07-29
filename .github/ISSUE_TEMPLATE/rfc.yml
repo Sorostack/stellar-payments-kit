@@ -1,0 +1,29 @@
+name: RFC / Feature Proposal
+description: Propose a significant new feature or architectural change
+labels: ["rfc"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to propose significant changes to Stellar Payments Kit.
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Why is this change needed? What problem does it solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution in detail
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other approaches were considered?
+    validations:
+      required: false

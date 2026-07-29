@@ -1,0 +1,32 @@
+name: Good First Issue
+description: A beginner-friendly issue for first-time contributors
+labels: ["good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking an interest in contributing! This issue is designed to be approachable for first-time contributors.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be done
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What constitutes a completed task
+      placeholder: |
+        - [ ] Criteria 1
+        - [ ] Criteria 2
+    validations:
+      required: true
+  - type: textarea
+    id: resources
+    attributes:
+      label: Resources
+      description: Links to relevant code, docs, or examples
+    validations:
+      required: false
