@@ -1,0 +1,18 @@
+[package]
+name = "payment-splitter-contract"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+soroban-sdk = { workspace = true }
+
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+lto = true
+debug = false
+codegen-units = 1
