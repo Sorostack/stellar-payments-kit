@@ -12,4 +12,4 @@ edition = "2021"
 license = "MIT"
 
 [workspace.dependencies]
-soroban-sdk = "22.0.1"
+soroban-sdk = "27.0.3"
