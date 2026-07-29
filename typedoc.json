@@ -1,0 +1,9 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["lib/stellar/index.ts"],
+  "out": "docs/api",
+  "name": "Stellar Payments Kit",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeProtected": true
+}
