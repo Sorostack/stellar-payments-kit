@@ -1,27 +1,19 @@
 ---
-name: Feature Request
-about: Suggest a new feature or improvement
-title: "[feat] "
+name: Feature request
+about: Suggest an idea for this project
+title: "[FEATURE] "
 labels: enhancement
-assignees: ''
+assignees: ""
 ---
 
-## Problem / motivation
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is.
 
-What problem does this feature solve? What use case does it enable?
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
 
-## Proposed solution
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features.
 
-Describe the feature you'd like. Include example usage if possible.
-
-```typescript
-// Example usage of the proposed feature
-```
-
-## Alternatives considered
-
-Have you tried any workarounds or existing approaches?
-
-## Additional context
-
-Any relevant Stellar protocol references (SEPs, CAPs), related issues, or external examples.
+**Additional context**
+Any other context or screenshots about the feature request.

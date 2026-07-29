@@ -1,35 +1,24 @@
 ---
-name: Bug Report
-about: Report a reproducible bug or unexpected behavior
-title: "[bug] "
+name: Bug report
+about: Report a bug to help us improve
+title: "[BUG] "
 labels: bug
-assignees: ''
+assignees: ""
 ---
 
-## Describe the bug
+**Describe the bug**
+A clear and concise description of the bug.
 
-A clear and concise description of what the bug is.
+**To Reproduce**
+Steps to reproduce the behavior.
 
-## Steps to reproduce
+**Expected behavior**
+A clear description of what you expected to happen.
 
-1. Call `...` with params `...`
-2. Observe `...`
+**Environment:**
+- stellar-payments-kit version:
+- Node.js version:
+- OS:
 
-## Expected behavior
-
-What you expected to happen.
-
-## Actual behavior
-
-What actually happened. Include any error messages or stack traces.
-
-## Environment
-
-- OS: [e.g. macOS 14, Ubuntu 22.04, Windows 11]
-- Node.js version: [e.g. 20.11.0]
-- stellar-payments-kit version / commit: [e.g. 0.1.0]
-- Network: [testnet / mainnet]
-
-## Additional context
-
-Any other context, screenshots, or code snippets that help explain the problem.
+**Additional context**
+Any other context about the problem.

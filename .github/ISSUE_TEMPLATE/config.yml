@@ -1,8 +1,8 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
-  - name: Documentation
-    url: https://github.com/Sorostack/stellar-payments-kit/docs
-    about: Check the docs before filing an issue
-  - name: Security
-    url: https://github.com/Sorostack/stellar-payments-kit/SECURITY.md
-    about: Report security issues privately
+  - name: Stellar Community
+    url: https://stellarcommunity.org
+    about: Ask questions and discuss with the community
+  - name: Security Issues
+    url: https://github.com/anomalyco/stellar-payments-kit/security/policy
+    about: Report security vulnerabilities here
