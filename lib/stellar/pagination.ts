@@ -34,8 +34,8 @@ export async function getAccountTransactions(
 
   return {
     records: page.records,
-    nextCursor: page.next ? new URL(page.next).searchParams.get("cursor") : null,
-    hasMore: !!page.next,
+    nextCursor: null,
+    hasMore: typeof page.next === "function",
   };
 }
 
@@ -61,7 +61,7 @@ export async function getAccountPayments(
 
   return {
     records: page.records,
-    nextCursor: page.next ? new URL(page.next).searchParams.get("cursor") : null,
-    hasMore: !!page.next,
+    nextCursor: null,
+    hasMore: typeof page.next === "function",
   };
 }

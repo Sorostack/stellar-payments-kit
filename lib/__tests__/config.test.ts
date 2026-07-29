@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { configure, getConfig, resetConfig, defaultConfig } from "@/lib/config";
 
 describe("Config", () => {

@@ -1,5 +1,4 @@
-import { Keypair, TransactionBuilder, Operation, BASE_FEE } from "@stellar/stellar-sdk";
-import { getServer, getNetworkConfig, StellarNetwork } from "./network";
+import { StellarNetwork } from "./network";
 
 export interface PaymentStreamConfig {
   sourceSecret: string;

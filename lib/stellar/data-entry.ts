@@ -33,7 +33,7 @@ export async function clearDataEntry(
   const account = await server.loadAccount(keypair.publicKey());
 
   const tx = new TransactionBuilder(account, { fee: BASE_FEE, networkPassphrase })
-    .addOperation(Operation.manageData({ name }))
+    .addOperation(Operation.manageData({ name, value: "" }))
     .setTimeout(30)
     .build();
 

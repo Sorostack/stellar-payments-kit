@@ -34,7 +34,7 @@ export async function depositLiquidityPool(
     fee: BASE_FEE, networkPassphrase,
   })
     .addOperation(Operation.liquidityPoolDeposit({
-      liquidityPoolId: Buffer.alloc(32),
+      liquidityPoolId: "0000000000000000000000000000000000000000000000000000000000000000",
       maxAmountA: depositAmountA,
       maxAmountB: depositAmountB,
       minPrice: { n: 1, d: 1 },

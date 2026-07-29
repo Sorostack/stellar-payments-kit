@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { pollTransactionStatus } from "@/lib/stellar/tx-status";
 
 vi.mock("@/lib/stellar/network", () => ({

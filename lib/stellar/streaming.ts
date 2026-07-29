@@ -6,7 +6,7 @@ export interface StreamHandler<T> {
   onClose?: () => void;
 }
 
-export class PaymentStream {
+export class PaymentEventStream {
   private server: Horizon.Server;
   private accountId: string;
   private handler: StreamHandler<any>;
@@ -44,8 +44,8 @@ export function streamPayments(
   serverUrl: string,
   accountId: string,
   handler: StreamHandler<any>,
-): PaymentStream {
-  const stream = new PaymentStream(serverUrl, accountId, handler);
+): PaymentEventStream {
+  const stream = new PaymentEventStream(serverUrl, accountId, handler);
   stream.start();
   return stream;
 }

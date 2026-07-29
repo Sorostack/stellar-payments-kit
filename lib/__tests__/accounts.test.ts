@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { generateKeypair } from "@/lib/stellar/accounts";
 
 describe("generateKeypair", () => {

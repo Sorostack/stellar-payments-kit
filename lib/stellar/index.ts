@@ -34,8 +34,6 @@ export * from "./path-payment";
 export * from "./liquidity-pool";
 export * from "./fee-estimation";
 export * from "./pagination";
-export * from "./memo";
-export * from "./time";
 export * from "./streaming";
 export * from "./amm";
 export * from "./cache";

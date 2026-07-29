@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { PaymentStream } from "@/lib/stellar/streaming";
+import { PaymentEventStream } from "@/lib/stellar/streaming";
 
-describe("PaymentStream", () => {
+describe("PaymentEventStream", () => {
   it("throws with invalid server URL", () => {
     expect(
-      () => new PaymentStream("not-a-url", "GABC123", { onMessage: () => {} }),
+      () => new PaymentEventStream("not-a-url", "GABC123", { onMessage: () => {} }),
     ).toThrow();
   });
 });

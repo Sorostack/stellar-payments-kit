@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { sleep, truncateMiddle, formatTimestamp, chunkArray, omit, pick } from "@/lib/stellar/utils";
+import { sleep, truncateMiddle, chunkArray, omit, pick } from "@/lib/stellar/utils";
 
 describe("utils", () => {
   describe("sleep", () => {

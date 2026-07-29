@@ -1,5 +1,5 @@
 import {
-  Keypair, TransactionBuilder, Operation, Asset, BASE_FEE,
+  Keypair, TransactionBuilder, Operation, Asset, BASE_FEE, xdr, Claimant,
 } from "@stellar/stellar-sdk";
 import { getServer, getNetworkConfig, StellarNetwork } from "./network";
 
@@ -32,7 +32,7 @@ export async function createClaimableBalance(
     .addOperation(Operation.createClaimableBalance({
       asset,
       amount,
-      claimants: [{ destination: claimant, predicate: { unconditional: true } }],
+      claimants: [new Claimant(claimant, xdr.ClaimPredicate.claimPredicateUnconditional())],
     }))
     .setTimeout(30)
     .build();

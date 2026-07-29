@@ -1,5 +1,5 @@
 import {
-  Keypair, TransactionBuilder, Operation, Asset, BASE_FEE, TimeBounds,
+  Keypair, TransactionBuilder, Operation, Asset, BASE_FEE,
 } from "@stellar/stellar-sdk";
 import { getServer, getNetworkConfig, StellarNetwork } from "./network";
 
@@ -27,10 +27,9 @@ export async function sendTimeLockedPayment(
 
   const asset = assetParam ? new Asset(assetParam.code, assetParam.issuer) : Asset.native();
   const minTime = Math.floor(unlockAt.getTime() / 1000);
-  const timeBounds = new TimeBounds(minTime, 0);
-
   const transaction = new TransactionBuilder(sourceAccount, {
     fee: BASE_FEE, networkPassphrase,
+    timebounds: { minTime, maxTime: 0 },
   })
     .addOperation(Operation.payment({
       destination: destinationPublicKey,
@@ -39,8 +38,6 @@ export async function sendTimeLockedPayment(
     }))
     .setTimeout(0)
     .build();
-
-  transaction.timeBounds = timeBounds;
   transaction.sign(sourceKeypair);
 
   const result = await server.submitTransaction(transaction);
