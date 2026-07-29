@@ -1,5 +1,8 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: GrantFox Project Page
-    url: https://contribute.grantfox.xyz/projects
-    about: View and contribute to this project on GrantFox.
+  - name: Documentation
+    url: https://github.com/Sorostack/stellar-payments-kit/docs
+    about: Check the docs before filing an issue
+  - name: Security
+    url: https://github.com/Sorostack/stellar-payments-kit/SECURITY.md
+    about: Report security issues privately
