@@ -12,6 +12,6 @@ jobs:
       - run: |
           echo "## [${{ github.event.release.tag_name }}] - $(date +%Y-%m-%d)" >> CHANGELOG.md
           echo "${{ github.event.release.body }}" >> CHANGELOG.md
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore: update changelog for ${{ github.event.release.tag_name }}"
