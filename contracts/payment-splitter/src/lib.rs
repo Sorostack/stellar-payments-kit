@@ -50,7 +50,7 @@ impl PaymentSplitterContract {
 
         for i in 0..config.payees.len() {
             let share = config.shares.get(i).unwrap();
-            let amount = (payment.total_amount * share as i128) / config.total_shares as i128;
+            let amount = (payment.total_amount * (share as i128)) / (config.total_shares as i128);
             amounts.push_back(amount);
         }
 
@@ -71,18 +71,19 @@ impl PaymentSplitterContract {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use soroban_sdk::Env;
+    use soroban_sdk::testutils::Address as _;
 
     #[test]
     fn test_initialize_and_distribute() {
         let env = Env::default();
+        env.mock_all_auths();
         let payee1 = Address::generate(&env);
         let payee2 = Address::generate(&env);
 
         let payees = vec![&env, payee1.clone(), payee2.clone()];
         let shares = vec![&env, 60u32, 40u32];
 
-        let contract_id = env.register_contract(None, PaymentSplitterContract);
+        let contract_id = env.register(PaymentSplitterContract, ());
         let client = PaymentSplitterContractClient::new(&env, &contract_id);
 
         client.initialize(&payees, &shares);
