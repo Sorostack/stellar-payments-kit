@@ -74,17 +74,18 @@ impl TokenSwapContract {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use soroban_sdk::Env;
+    use soroban_sdk::testutils::Address as _;
 
     #[test]
     fn test_create_and_get_swap() {
         let env = Env::default();
+        env.mock_all_auths();
         let initiator = Address::generate(&env);
         let token_a = Address::generate(&env);
         let token_b = Address::generate(&env);
         let counter_party = Address::generate(&env);
 
-        let contract_id = env.register_contract(None, TokenSwapContract);
+        let contract_id = env.register(TokenSwapContract, ());
         let client = TokenSwapContractClient::new(&env, &contract_id);
 
         client.create_swap(&initiator, &token_a, &token_b, &100, &200, &counter_party);
@@ -97,12 +98,13 @@ mod tests {
     #[test]
     fn test_fulfill_swap() {
         let env = Env::default();
+        env.mock_all_auths();
         let initiator = Address::generate(&env);
         let token_a = Address::generate(&env);
         let token_b = Address::generate(&env);
         let counter_party = Address::generate(&env);
 
-        let contract_id = env.register_contract(None, TokenSwapContract);
+        let contract_id = env.register(TokenSwapContract, ());
         let client = TokenSwapContractClient::new(&env, &contract_id);
 
         client.create_swap(&initiator, &token_a, &token_b, &100, &200, &counter_party);
@@ -115,12 +117,13 @@ mod tests {
     #[test]
     fn test_cancel_swap() {
         let env = Env::default();
+        env.mock_all_auths();
         let initiator = Address::generate(&env);
         let token_a = Address::generate(&env);
         let token_b = Address::generate(&env);
         let counter_party = Address::generate(&env);
 
-        let contract_id = env.register_contract(None, TokenSwapContract);
+        let contract_id = env.register(TokenSwapContract, ());
         let client = TokenSwapContractClient::new(&env, &contract_id);
 
         client.create_swap(&initiator, &token_a, &token_b, &100, &200, &counter_party);

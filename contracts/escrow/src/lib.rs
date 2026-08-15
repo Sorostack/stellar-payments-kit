@@ -7,6 +7,7 @@ const RELEASED: Symbol = symbol_short!("released");
 const REFUNDED: Symbol = symbol_short!("refunded");
 
 #[contracttype]
+#[derive(Clone)]
 pub enum EscrowState {
     Pending,
     Released,
@@ -75,16 +76,17 @@ impl EscrowContract {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use soroban_sdk::{Env};
+    use soroban_sdk::testutils::Address as _;
 
     #[test]
     fn test_deposit() {
         let env = Env::default();
+        env.mock_all_auths();
         let depositor = Address::generate(&env);
         let beneficiary = Address::generate(&env);
         let arbiter = Address::generate(&env);
 
-        let contract_id = env.register_contract(None, EscrowContract);
+        let contract_id = env.register(EscrowContract, ());
         let client = EscrowContractClient::new(&env, &contract_id);
 
         client.deposit(&depositor, &beneficiary, &arbiter, &1000);
